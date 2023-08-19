@@ -4,11 +4,11 @@
 /**
  * _putchar - Writes a character to standard output.
  * @c: The character to be written.
- * Return: On success, the number of characters written. On error, -1 is returned.
+ * Return: On success, the number of characters written.
  */
 int _putchar(char c)
 {
-    return write(1, &c, 1);
+return (write(1, &c, 1));
 }
 
 /**
@@ -25,51 +25,51 @@ int _putchar(char c)
  */
 int _printf(const char *format, ...)
 {
-    const char *p;
-    va_list arguments;
+const char *p;
+va_list arguments;
 
-    register int count = 0;
+register int count = 0;
 
-    va_start(arguments, format);
-    if (!format || (format[0] == '%' && !format[1]))
-    {
-        va_end(arguments);
-        return (-1);
-    }
-    if (format[0] == '%' && format[1] == ' ' && !format[2])
-    {
-        va_end(arguments);
-        return (-1);
-    }
-    for (p = format; *p; p++)
-    {
-        if (*p == '%')
-        {
-            p++;
-            if (*p == 'c')
-            {
-                char ch = (char)va_arg(arguments, int);
-                count += _putchar(ch);
-                continue;
-            }
-            else if (*p == 's')
-            {
-                char *str = va_arg(arguments, char *);
-                while (*str)
-                {
-                    count += _putchar(*str);
-                    str++;
-                }
-                continue;
-            }
-            else if (*p == '%')
-            {
-                count += _putchar('%');
-                continue;
-            }
-        }
-        count += _putchar(*p);
-    }
-    va_end(arguments);
-    return (count);
+va_start(arguments, format);
+if (!format || (format[0] == '%' && !format[1]))
+{
+va_end(arguments);
+return (-1);
+}
+if (format[0] == '%' && format[1] == ' ' && !format[2])
+{
+va_end(arguments);
+return (-1);
+}
+for (p = format; *p; p++)
+{
+if (*p == '%')
+{
+p++;
+if (*p == 'c')
+{
+char ch = (char)va_arg(arguments, int);
+count += _putchar(ch);
+continue;
+}
+else if (*p == 's')
+{
+char *str = va_arg(arguments, char *);
+while (*str)
+{
+count += _putchar(*str);
+str++;
+}
+continue;
+}
+else if (*p == '%')
+{
+count += _putchar('%');
+continue;
+}
+}
+count += _putchar(*p);
+}
+va_end(arguments);
+return (count);
 }
