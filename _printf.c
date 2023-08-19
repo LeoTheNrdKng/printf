@@ -7,11 +7,11 @@
 /**
  * _putchar - writes a character to stdout
  * @c: The character to print
- * Return: On success 1. On error, -1 is returned and errno is set appropriately.
+ * Return: On success 1, and on error, -1 is returned.
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+        return (write(1, &c, 1));
 }
 
 /**
@@ -21,9 +21,9 @@ int _putchar(char c)
  */
 int print_c(va_list args)
 {
-	char c = va_arg(args, int);
-	_putchar(c);
-	return (1);
+        char c = va_arg(args, int);
+        _putchar(c);
+        return (1);
 }
 
 /**
@@ -33,18 +33,18 @@ int print_c(va_list args)
  */
 int print_s(va_list args)
 {
-	char *str = va_arg(args, char *);
-	int length = 0;
+        char *str = va_arg(args, char *);
+        int length = 0;
 
-	if (str != NULL)
-	{
-		while (str[length])
-		{
-			_putchar(str[length]);
-			length++;
-		}
-	}
-	return (length);
+        if (str != NULL)
+        {
+                while (str[length])
+                {
+                        _putchar(str[length]);
+                        length++;
+                }
+        }
+        return (length);
 }
 
 /**
@@ -54,9 +54,9 @@ int print_s(va_list args)
  */
 int print_percent(va_list args)
 {
-	(void)args;
-	_putchar('%');
-	return (1);
+        (void)args;
+        _putchar('%');
+        return (1);
 }
 
 /**
@@ -85,11 +85,11 @@ int _printf(const char *format, ...)
 			else if (format[i] == '%')
 				printed_chars += print_percent(args);
 			else
-				{
-					_putchar('%');
-					_putchar(format[i]);
-					printed_chars += 2;
-				}
+			{
+				_putchar('%');
+				_putchar(format[i]);
+				printed_chars += 2;
+			}
 		}
 		else
 		{
