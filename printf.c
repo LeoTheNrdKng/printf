@@ -1,4 +1,15 @@
 #include "main.h"
+#include <unistd.h>
+
+/**
+ * _putchar - Writes a character to standard output.
+ * @c: The character to be written.
+ * Return: On success, the number of characters written. On error, -1 is returned.
+ */
+int _putchar(char c)
+{
+    return write(1, &c, 1);
+}
 
 /**
  * _printf - Produces output according to a format.
@@ -14,30 +25,34 @@
  */
 int _printf(const char *format, ...)
 {
-    int (*pfunc)(va_list, flags_t *);
     const char *p;
     va_list arguments;
-    flags_t flags = {0, 0, 0};
 
     register int count = 0;
 
     va_start(arguments, format);
     if (!format || (format[0] == '%' && !format[1]))
+    {
+        va_end(arguments);
         return (-1);
+    }
     if (format[0] == '%' && format[1] == ' ' && !format[2])
+    {
+        va_end(arguments);
         return (-1);
+    }
     for (p = format; *p; p++)
     {
         if (*p == '%')
         {
             p++;
-            if (*p == 'c') // Character specifier
+            if (*p == 'c')
             {
-                char ch = va_arg(arguments, int);
+                char ch = (char)va_arg(arguments, int);
                 count += _putchar(ch);
                 continue;
             }
-            else if (*p == 's') // String specifier
+            else if (*p == 's')
             {
                 char *str = va_arg(arguments, char *);
                 while (*str)
@@ -47,7 +62,7 @@ int _printf(const char *format, ...)
                 }
                 continue;
             }
-            else if (*p == '%') // Literal percent symbol
+            else if (*p == '%')
             {
                 count += _putchar('%');
                 continue;
@@ -55,7 +70,6 @@ int _printf(const char *format, ...)
         }
         count += _putchar(*p);
     }
-    _putchar(-1); // Signal the end of printing
     va_end(arguments);
     return (count);
 }
