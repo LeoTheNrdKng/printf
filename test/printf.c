@@ -12,46 +12,38 @@ return (write(1, &c, 1));
 }
 
 /**
- * print_char - Prints a character.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
+ * handle_char - Handles the 'c' format specifier.
+ * @arguments: The va_list containing the argument list.
+ * @count: Pointer to the count of characters printed.
  */
-int print_char(va_list args, int count)
+void handle_char(va_list arguments, int *count)
 {
-char c = va_arg(args, int);
-count += _putchar(c);
-return (count);
+char ch = (char)va_arg(arguments, int);
+*count += _putchar(ch);
 }
 
 /**
- * print_string - Prints a string.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
+ * handle_string - Handles the 's' format specifier.
+ * @arguments: The va_list containing the argument list.
+ * @count: Pointer to the count of characters printed.
  */
-int print_string(va_list args, int count)
+void handle_string(va_list arguments, int *count)
 {
-char *str = va_arg(args, char *);
+char *str = va_arg(arguments, char *);
 while (*str)
-count += _putchar(*str++);
-return (count);
+{
+*count += _putchar(*str);
+str++;
+}
 }
 
 /**
- * print_percent - Prints a percent character.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
+ * handle_percent - Handles the '%%' format specifier.
+ * @count: Pointer to the count of characters printed.
  */
-int print_percent(va_list args, int count)
+void handle_percent(int *count)
 {
-(void)args;
-count += _putchar('%');
-return (count);
+*count += _putchar('%');
 }
 
 /**
@@ -65,8 +57,13 @@ int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0;
+int num;
+unsigned int u_num;
+char buffer[20];
+char u_buffer[20];
 
 va_start(args, format);
+
 while (*format)
 {
 if (*format == '%')
@@ -75,23 +72,44 @@ format++;
 switch (*format)
 {
 case 'c':
-count = print_char(args, count);
+handle_char(args, &count);
 break;
 case 's':
-count = print_string(args, count);
+handle_string(args, &count);
 break;
 case '%':
-count = print_percent(args, count);
+handle_percent(&count);
+break;
+case 'd':
+case 'i':
+num = va_arg(args, int);
+{
+int len = snprintf(buffer, sizeof(buffer), "%d", num);
+write(1, buffer, len);
+count += len;
+}
+break;
+case 'u':
+u_num = va_arg(args, unsigned int);
+{
+int u_len = snprintf(u_buffer, sizeof(u_buffer), "%u", u_num);
+write(1, u_buffer, u_len);
+count += u_len;
+}
 break;
 default:
-break;
+write(1, format - 1, 2);
+count += 2;
 }
 }
 else
-count += _putchar(*format);
+{
+write(1, format, 1);
+count++;
+}
 format++;
 }
-va_end(args);
 
+va_end(args);
 return (count);
 }
