@@ -1,51 +1,78 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdlib.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <unistd.h>
 
 /**
- * _putchar - Writes a character to stdout.
- * @c: The character to write.
- *
- * Return: On success, 1 is returned. On error, -1 is returned.
+ * struct flags - struct containing flags to "turn on"
+ * when a flag specifier is passed to _printf()
+ * @plus: flag for the '+' character
+ * @space: flag for the ' ' character
+ * @hash: flag for the '#' character
  */
-int _putchar(char c);
+typedef struct flags
+{
+        int plus;
+        int space;
+        int hash;
+} flags_t;
 
 /**
- * print_char - Prints a character.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
+ * struct printHandler - struct to choose the right function depending
+ * on the format specifier passed to _printf()
+ * @c: format specifier
+ * @f: pointer to the correct printing function
  */
-int print_char(va_list args, int count);
+typedef struct printHandler
+{
+        char c;
+        int (*f)(va_list ap, flags_t *f);
+} ph;
 
-/**
- * print_string - Prints a string.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
- */
-int print_string(va_list args, int count);
+/* print_nums */
+int print_int(va_list l, flags_t *f);
+void print_number(int n);
+int print_unsigned(va_list l, flags_t *f);
+int count_digit(int i);
 
-/**
- * print_percent - Prints a percent character.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
- */
-int print_percent(va_list args, int count);
+/* print_bases */
+int print_hex(va_list l, flags_t *f);
+int print_hex_big(va_list l, flags_t *f);
+int print_binary(va_list l, flags_t *f);
+int print_octal(va_list l, flags_t *f);
 
-/**
- * _printf - Custom implementation of the printf function.
- * @format: The format string.
- * @...: Additional arguments depending on the format string.
- *
- * Return: The total number of characters printed.
- */
+/* converter */
+char *convert(unsigned long int num, int base, int lowercase);
+
+/* _printf */
 int _printf(const char *format, ...);
+
+/* get_print */
+int (*get_print(char s))(va_list, flags_t *);
+
+/* get_flag */
+int get_flag(char s, flags_t *f);
+
+/* print_alpha */
+int print_string(va_list l, flags_t *f);
+int print_char(va_list l, flags_t *f);
+
+/* write_funcs */
+int _putchar(char c);
+int _puts(char *str);
+
+/* print_custom */
+int print_rot13(va_list l, flags_t *f);
+int print_rev(va_list l, flags_t *f);
+int print_bigS(va_list l, flags_t *f);
+
+/* print_address */
+int print_address(va_list l, flags_t *f);
+
+/* print_percent */
+int print_percent(va_list l, flags_t *f);
 
 #endif
