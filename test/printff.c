@@ -22,9 +22,10 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
+	char c;
+	char *str;
 
 	va_start(args, format);
-
 	while (*format)
 	{
 		if (*format == '%')
@@ -32,60 +33,27 @@ int _printf(const char *format, ...)
 			format++;
 			switch (*format)
 			{
-				case 'c':
-				{
-					char ch = (char)va_arg(args, int);
-					count += _putchar(ch);
-					break;
-				}
-				case 's':
-				{
-					char *str = va_arg(args, char *);
-					while (*str)
-					{
-						count += _putchar(*str);
-						str++;
-					}
-					break;
-				}
-				case '%':
-				{
-					count += _putchar('%');
-					break;
-				}
-				case 'd':
-				case 'i':
-				{
-					int num = va_arg(args, int);
-					char buffer[20];
-					int len = snprintf(buffer, sizeof(buffer), "%d", num);
-					write(1, buffer, len);
-					count += len;
-					break;
-				}
-				case 'u':
-				{
-					unsigned int u_num = va_arg(args, unsigned int);
-					char u_buffer[20];
-					int u_len = snprintf(u_buffer, sizeof(u_buffer), "%u", u_num);
-					write(1, u_buffer, u_len);
-					count += u_len;
-					break;
-				}
-				default:
-				{
-					write(1, format - 1, 2);
-					count += 2;
-				}
+			case 'c':
+				c = va_arg(args, int);
+				count += _putchar(c);
+				break;
+			case 's':
+				str = va_arg(args, char *);
+				while (*str)
+					count += _putchar(*str++);
+				break;
+			case '%':
+				count += _putchar('%');
+				break;
+			default:
+				break;
 			}
 		}
 		else
-		{
-			write(1, format, 1);
-			count++;
-		}
+			count += _putchar(*format);
 		format++;
 	}
 	va_end(args);
+
 	return (count);
 }
