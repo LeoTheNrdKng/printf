@@ -1,35 +1,54 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-/* Writes a character to stdout. */
+/**
+ * _putchar - Writes a character to stdout
+ * @c: The character to print
+ *
+ * Return: On success, 1. On error, -1 is returned and errno is set appropriately.
+ */
 int _putchar(char c);
 
-/* Handles the 'c' format specifier. */
+/**
+ * handle_char - Handles the formatting and printing of a character
+ * @arguments: The list of arguments containing the character to print
+ * @count: A pointer to the counter tracking the number of characters printed
+ */
 void handle_char(va_list arguments, int *count);
 
-/* Handles the 's' format specifier. */
+/**
+ * handle_string - Handles the formatting and printing of a string
+ * @arguments: The list of arguments containing the string to print
+ * @count: A pointer to the counter tracking the number of characters printed
+ */
 void handle_string(va_list arguments, int *count);
 
-/* Handles the '%%' format specifier. */
+/**
+ * handle_percent - Handles the formatting and printing of a percent symbol
+ * @count: A pointer to the counter tracking the number of characters printed
+ */
 void handle_percent(int *count);
 
-/* Handles the 'd' and 'i' format specifiers. */
-void handle_integer(va_list arguments, int *count);
+/**
+ * process_format - Processes the format string and its arguments
+ * @format: The format string containing the format specifiers
+ * @args: The list of arguments to be formatted and printed
+ * @count: A pointer to the counter tracking the number of characters printed
+ */
+void process_format(const char *format, va_list args, int *count);
 
-/* Handles the 'u' format specifier. */
-void handle_unsigned_integer(va_list arguments, int *count);
-
-/* Processes a single format specifier. */
-void handle_format(char specifier, va_list args, int *count);
-
-/* Declare process_format function to make it visible in _printf. */
-int process_format(const char **format, va_list args, int *count);
-
-/* Custom implementation of the printf function. */
+/**
+ * _printf - Custom printf function with variable arguments
+ * @format: The format string containing the format specifiers
+ * @...: Additional arguments to be formatted and printed
+ *
+ * Return: The number of characters printed.
+ */
 int _printf(const char *format, ...);
 
 #endif /* MAIN_H */
