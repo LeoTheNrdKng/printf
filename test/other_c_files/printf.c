@@ -22,24 +22,43 @@ int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0;
-
 va_start(args, format);
-
 while (*format)
 {
 if (*format == '%')
 {
 format++;
-format += process_format(&format, args, &count);
+switch (*format)
+{
+case 'c':
+handle_char(args, &count);
+break;
+case 's':
+handle_string(args, &count);
+break;
+case '%':
+handle_percent(&count);
+break;
+case 'd':
+case 'i':
+handle_integer(args, &count);
+break;
+case 'u':
+handle_unsigned_integer(args, &count);
+break;
+default:
+write(1, format - 1, 2);
+count += 2;
+break;
+}
 }
 else
 {
 _putchar(*format);
 count++;
+}
 format++;
 }
-}
-
 va_end(args);
 return (count);
 }
