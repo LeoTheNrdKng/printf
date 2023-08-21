@@ -8,7 +8,7 @@
  */
 int _putchar(char c)
 {
-return (write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 /**
@@ -20,9 +20,9 @@ return (write(1, &c, 1));
  */
 int print_char(va_list args, int count)
 {
-char c = va_arg(args, int);
-count += _putchar(c);
-return (count);
+	char c = va_arg(args, int);
+	count += _putchar(c);
+	return (count);
 }
 
 /**
@@ -34,24 +34,10 @@ return (count);
  */
 int print_string(va_list args, int count)
 {
-char *str = va_arg(args, char *);
-while (*str)
-count += _putchar(*str++);
-return (count);
-}
-
-/**
- * print_percent - Prints a percent character.
- * @args: The va_list of arguments.
- * @count: The current character count.
- *
- * Return: The updated character count.
- */
-int print_percent(va_list args, int count)
-{
-(void)args;
-count += _putchar('%');
-return (count);
+	char *str = va_arg(args, char *);
+	while (*str)
+		count += _putchar(*str++);
+	return (count);
 }
 
 /**
@@ -63,35 +49,35 @@ return (count);
  */
 int _printf(const char *format, ...)
 {
-va_list args;
-int count = 0;
+	va_list args;
+	int count = 0;
 
-va_start(args, format);
-while (*format)
-{
-if (*format == '%')
-{
-format++;
-switch (*format)
-{
-case 'c':
-count = print_char(args, count);
-break;
-case 's':
-count = print_string(args, count);
-break;
-case '%':
-count = print_percent(args, count);
-break;
-default:
-break;
-}
-}
-else
-count += _putchar(*format);
-format++;
-}
-va_end(args);
+	va_start(args, format);
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			switch (*format)
+			{
+			case 'c':
+				count = print_char(args, count);
+				break;
+			case 's':
+				count = print_string(args, count);
+				break;
+			case '%':
+				count += _putchar('%');
+				break;
+			default:
+				break;
+			}
+		}
+		else
+			count += _putchar(*format);
+		format++;
+	}
+	va_end(args);
 
-return (count);
+	return (count);
 }
