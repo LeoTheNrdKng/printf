@@ -1,34 +1,50 @@
 #include "main.h"
 
 /**
- * _printf - Custom implementation of printf function.
- * @format: The format string containing format specifiers.
- * @...: Additional arguments based on format specifiers.
+ * _printf - Custom printf function that handles characters.
+ * @format: The format string.
  *
- * Return: Number of characters printed.
+ * Return: The number of characters printed.
  */
 int _printf(const char *format, ...)
 {
-va_list args;
 int count = 0;
+va_list arguments;
+const char *ptr;
 
-va_start(args, format);
+va_start(arguments, format);
 
-while (*format)
+for (ptr = format; *ptr != '\0'; ptr++)
 {
-if (*format == '%')
+if (*ptr == '%')
 {
-format++;
-process_format(format, args, &count);
+ptr++;
+if (*ptr == 'c')
+{
+char ch = va_arg(arguments, int);
+count += _putchar(ch);
+}
+else if (*ptr == 's')
+{
+char *str = va_arg(arguments, char *);
+while (*str)
+{
+count += _putchar(*str);
+str++;
+}
+}
+else if (*ptr == '%')
+{
+count += _putchar('%');
+}
 }
 else
 {
-write(1, format, 1);
-count++;
+count += _putchar(*ptr);
 }
-format++;
 }
 
-va_end(args);
+va_end(arguments);
+
 return (count);
 }
