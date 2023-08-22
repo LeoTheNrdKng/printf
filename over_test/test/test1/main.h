@@ -59,4 +59,11 @@ int _printf(const char *format, ...);
  */
 int print_binary(unsigned int num);
 
+/**
+ * print_binary_recursive - Helper function for printing binary recursively.
+ * @num: The unsigned integer to be printed.
+ * @b_len: A pointer to the count of characters printed.
+ */
+void print_binary_recursive(unsigned int num, int *b_len);
+
 #endif /* MAIN_H */

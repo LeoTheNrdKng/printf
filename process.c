@@ -41,6 +41,13 @@ write(1, u_buffer, u_len);
 *count += u_len;
 }
 break;
+case 'b':
+u_num = va_arg(args, unsigned int);
+{
+int b_len = print_binary(u_num);
+*count += b_len;
+}
+break;
 default:
 write(1, format - 1, 2);
 *count += 2;

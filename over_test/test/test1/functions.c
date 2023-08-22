@@ -15,10 +15,6 @@ return (write(1, &c, 1));
  * handle_char - Handles a character argument for printing.
  * @arguments: A va_list containing the list of arguments.
  * @count: A pointer to the count of characters printed.
- *
- * Description: This function retrieves a character argument from va_list
- *              and prints it to the standard output. It also updates the
- *              character count.
  */
 void handle_char(va_list arguments, int *count)
 {
@@ -30,10 +26,6 @@ char ch = (char)va_arg(arguments, int);
  * handle_string - Handles a string argument for printing.
  * @arguments: A va_list containing the list of arguments.
  * @count: A pointer to the count of characters printed.
- *
- * Description: This function retrieves a string argument from va_list
- *              and prints it to the standard output character by character.
- *              It also updates the character count.
  */
 void handle_string(va_list arguments, int *count)
 {
@@ -48,11 +40,38 @@ str++;
 /**
  * handle_percent - Handles the '%' character for printing.
  * @count: A pointer to the count of characters printed.
- *
- * Description: This function prints the '%' character to the standard output
- *              and updates the character count.
  */
 void handle_percent(int *count)
 {
 *count += _putchar('%');
+}
+
+/**
+ * print_binary - Prints an unsigned integer in binary format.
+ * @num: The unsigned integer to be printed.
+ *
+ * Return: The number of characters printed.
+ */
+int print_binary(unsigned int num)
+{
+char binary[32];
+int i = 0;
+
+if (num == 0)
+{
+return (_putchar('0'));
+}
+
+while (num > 0)
+{
+binary[i++] = (num & 1) + '0';
+num >>= 1;
+}
+
+for (i--; i >= 0; i--)
+{
+_putchar(binary[i]);
+}
+
+return (i + 1);
 }
