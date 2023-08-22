@@ -1,31 +1,61 @@
-.TH man 3 "22 August 2023" "0.01" "_printf man page"
+.TH _printf 3 "22 August 2023" "0.1" "Custom printf-like Function"
+
 .SH NAME
 .B _printf
-- A simple re-creation of the printf function
+- Custom implementation of printf function
+
 .SH SYNOPSIS
-To use this function the #include "main.h" header is needed.
+#include "main.h"
+.PP
+int _printf(const char *format, ...);
+
 .SH DESCRIPTION
-The _printf() function produces output according to a format which is described
-below. This function write its output to the stdout, the standard output stream.
+The _printf function is a custom implementation of the standard printf function. It formats and prints text according to a format string and additional arguments.
+.PP
+process_format, handle_char, handle_string, and handle_percent are functions used to handle different format specifiers within the _printf implementation.
+
 .SH USAGE
-To use _printf you have to use the following key characters preceeded by % symbol.
+To use _printf, include the "main.h" header in your source file. The function takes a format string and additional arguments (based on format specifiers) as input. Format specifiers are denoted by the '%' symbol, followed by a character representing the type of data to be printed.
+.PP
+Supported format specifiers:
 .RS 3
-%c: To be used to print characters
+%c: Print a character.
 .RS 0
-%s: To be used to print strings
+%s: Print a null-terminated string.
 .RS 0
-%d: To print integers of max and min size of an int type
+%%: Print a percent symbol.
 .RS 0
-%i: To print integers of max and min size of an int type
+%d, %i: Print a signed integer.
 .RS 0
-%b: To print a number in binary form
-.SH RETURN VALUES
-The _printf() function returns an integer representing the number of symbols
-printed not counting \\0 for the string.
+%u: Print an unsigned integer.
+
+.SH RETURN VALUE
+The _printf function returns the total number of characters printed.
+
+.SH EXAMPLES
+Example usage of _printf:
+.PP
+.sp
+.B #include "main.h"
+.sp
+.B int main() {
+.B     _printf("Hello world, it's %s and %s, this is a custom printf function in %c, it took %d days to complete", "Lionhel", "Shivali", 'C', 5);
+.B
+.B     return (0);
+.B }
+
 .SH SEE ALSO
 .I printf(3)
+
 .SH BUGS
----------
+The following problems were found when implementing the custom printf function:.RS 3.
+- Placing many instructions on a single line and failing to move trailing statements to the next line may make some areas of the code difficult to read and maintain
+- Due to instances of mixed declarations and code, the code may not adhere to the ISO C90 standard, which may cause compatibility issues with some compilers.
+-(ISO C90 -  refers to the 1990 version of the C programming language standard established by the International Organization for Standardization)
+-  Attempting to declare loop variables within 'for' loops could result in compilation errors when targeting ISO C90 compliance.
+- Functions may behave unexpectedly or encounter compilation difficulties when given arguments of mismatched pointer types.
+- When a function call doesn't have the necessary number of arguments, it can behave incorrectly or encounter runtime issues.
+.RE
+
 .SH AUTHOR
-Lionhel Ndalu
 Shivali Sewcharran
