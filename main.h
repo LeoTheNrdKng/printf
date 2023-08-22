@@ -51,4 +51,12 @@ void process_format(const char *format, va_list args, int *count);
  */
 int _printf(const char *format, ...);
 
+/**
+ * print_binary - Prints an unsigned integer in binary format.
+ * @num: The unsigned integer to be printed.
+ *
+ * Return: The number of characters printed.
+ */
+int print_binary(unsigned int num);
+
 #endif /* MAIN_H */
