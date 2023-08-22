@@ -10,7 +10,7 @@
  * _putchar - Writes a character to stdout
  * @c: The character to print
  *
- * Return: On success, 1. On error, -1 is returned and errno is set appr
+ * Return: On success, 1. On error, -1 is returned and errno is set appropriately.
  */
 int _putchar(char c);
 
@@ -65,5 +65,29 @@ int print_binary(unsigned int num);
  * @b_len: A pointer to the count of characters printed.
  */
 void print_binary_recursive(unsigned int num, int *b_len);
+
+/**
+ * process_int - Handles integer conversion specifier.
+ * @format: Format specifier.
+ * @args: A va_list containing the variable arguments.
+ * @count: A pointer to an integer to store the count of characters printed.
+ */ 
+void process_int(const char *format, va_list args, int *count);
+
+/**
+ * process_unsigned - Handles unsigned conversion specifier.
+ * @format: Format specifier.
+ * @args: A va_list containing the variable arguments.
+ * @count: A pointer to an integer to store the count of characters printed.
+ */
+void process_unsigned(const char *format, va_list args, int *count);
+
+/**
+ * process_binary - Handles binary conversion specifier.
+ * @format: Format specifier.
+ * @args: A va_list containing the variable arguments.
+ * @count: A pointer to an integer to store the count of characters printed.
+ */
+void process_binary(const char *format, va_list args, int *count);
 
 #endif /* MAIN_H */
